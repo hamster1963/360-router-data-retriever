@@ -29,6 +29,7 @@
 
 3. 程序将会登录路由器后台并获取数据。
 
+![](https://s2.loli.net/2023/04/29/hJGm2fPtY34Q9qA.png)
 ## 贡献
 
 欢迎您向该项目做出贡献！如果您发现了错误或有建议，请在GitHub上提交issue或pull request。
