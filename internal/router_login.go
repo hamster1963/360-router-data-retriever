@@ -56,7 +56,7 @@ func (r *Router) GetRandomString() (err error) {
 		return err
 	}
 	r.randStr = gconv.String(gconv.Map(res.ReadAllString())["rand_key"])
-	g.Dump(gtime.Now().String() + "获取到随机字符串" + r.randStr)
+	g.Dump(gtime.Now().String() + " Get RandomKey " + r.randStr)
 	return nil
 }
 
@@ -91,7 +91,7 @@ func (r *Router) GenerateAesString() (err error) {
 		g.Dump("aesStr is empty")
 		return errors.New("aesStr is empty")
 	}
-	g.Dump(gtime.Now().String() + "生成加密字符串" + r.aesStr)
+	g.Dump(gtime.Now().String() + " Generate AESKey " + r.aesStr)
 	return
 }
 
@@ -118,13 +118,10 @@ func (r *Router) Login() (err error) {
 	// set cookie and token
 	r.cookie = res.Header.Get("Set-Cookie")
 	r.token = gconv.Map(res.ReadAllString())["Token-ID"].(string)
-	g.Dump(gtime.Now().String() + "登录成功")
-	g.Dump("cookie: " + r.cookie)
-	g.Dump("token: " + r.token)
+	g.Dump(gtime.Now().String() + " Login Success ")
 	r.Headers = configs.DefaultHeaders
 	r.Headers["Cookie"] = r.cookie
 	r.Headers["Token-ID"] = r.token
-	g.Dump(r.Headers)
 	r.state = true
 	return
 }

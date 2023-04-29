@@ -34,7 +34,8 @@ func (r *Router) GetRouterInfo() (err error) {
 		err = errors.New("status code error")
 		return err
 	}
+	//TODO (laixin) 2023/4/29: Add process code
 	model := gjson.New(res.ReadAllString()).Get("data.model").String()
-	g.Dump("获取到机器型号" + model)
+	g.Dump("Get machine MODEL: " + model)
 	return
 }
