@@ -1,4 +1,4 @@
-module hamster1963/360-router-data-retriever
+module github.com/hamster1963/360-router-data-retriever
 
 go 1.20
 
