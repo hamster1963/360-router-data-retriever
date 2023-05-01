@@ -1,7 +1,12 @@
 package configs
 
+type RouterConfig struct {
+	RouterIP       string
+	RouterAddress  string
+	RouterPassword string
+}
+
 var (
-	RouterIP       = "192.168.31.1"
-	RouterAddress  = "http://" + RouterIP
-	RouterPassword = "deny1963"
+	DefaultRouterIP      = "192.168.31.1"
+	DefaultRouterAddress = "http://" + DefaultRouterIP
 )

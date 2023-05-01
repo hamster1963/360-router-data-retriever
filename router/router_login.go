@@ -27,8 +27,7 @@ type AesMethod interface {
 }
 
 type Router struct {
-	Address   string
-	Password  string
+	*configs.RouterConfig
 	state     bool
 	aesIv     []byte
 	inHeaders map[string]string
@@ -41,7 +40,11 @@ type Router struct {
 
 // GetRandomString 获取随机字符串
 func (r *Router) GetRandomString() (err error) {
-	apiUrl := r.Address + configs.GetRandStringUrl
+	r.Headers = configs.DefaultHeaders
+	r.Headers["Host"] = r.RouterIP
+	r.Headers["Origin"] = r.RouterAddress
+	r.Headers["Referer"] = r.RouterAddress + "/"
+	apiUrl := r.RouterAddress + configs.GetRandStringUrl
 	g.Dump(apiUrl)
 	httpClient := gclient.New()
 	res, err := httpClient.Get(context.Background(), apiUrl)
@@ -86,7 +89,7 @@ func (r *Router) GenerateAesString() (err error) {
 	}
 	encryptor := cipher.NewCBCEncrypter(block, configs.DefaultAesIv)
 	p7 := utils.PKCS7Encoder{BlockSize: 16}
-	padded := p7.Encode([]byte(r.Password))
+	padded := p7.Encode([]byte(r.RouterPassword))
 	cipherText := make([]byte, len(padded))
 	encryptor.CryptBlocks(cipherText, padded)
 	r.aesStr = hex.EncodeToString(cipherText)
@@ -99,7 +102,7 @@ func (r *Router) GenerateAesString() (err error) {
 }
 
 func (r *Router) Login() (err error) {
-	loginUrl := r.Address + configs.LoginUrl
+	loginUrl := r.RouterAddress + configs.LoginUrl
 	payload := "user=admin&pass=" + r.randStr[:32] + r.aesStr + "&form=1"
 	httpClient := gclient.New()
 	httpClient.SetHeaderMap(configs.DefaultHeaders)
@@ -123,7 +126,6 @@ func (r *Router) Login() (err error) {
 	r.cookie = res.Header.Get("Set-Cookie")
 	r.token = resData["Token-ID"].(string)
 	g.Dump(gtime.Now().String() + " Login Success ")
-	r.Headers = configs.DefaultHeaders
 	r.Headers["Cookie"] = r.cookie
 	r.Headers["Token-ID"] = r.token
 	r.state = true

@@ -19,7 +19,7 @@ func (r *Router) GetRouterSpeed() (speedData g.Map, err error) {
 		err = errors.New("please login first")
 		return nil, err
 	}
-	apiUrl := r.Address + configs.RouterSpeedUrl
+	apiUrl := r.RouterAddress + configs.RouterSpeedUrl
 	httpClient := g.Client().SetHeaderMap(r.Headers)
 	res, err := httpClient.Get(context.Background(), apiUrl)
 	if err != nil {
@@ -45,7 +45,7 @@ func (r *Router) GetRouterInfo() (infoData g.Map, err error) {
 		err = errors.New("please login first")
 		return
 	}
-	apiUrl := r.Address + configs.RouterInfoUrl
+	apiUrl := r.RouterAddress + configs.RouterInfoUrl
 	httpClient := g.Client().SetHeaderMap(r.Headers)
 	res, err := httpClient.Get(context.Background(), apiUrl)
 	if err != nil {
