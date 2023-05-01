@@ -15,7 +15,7 @@ type RouterMethod interface {
 }
 
 func (r *Router) GetRouterSpeed() (speedData g.Map, err error) {
-	if r.state == false {
+	if loginState, err := r.CheckLogin(); err != nil || loginState == false {
 		err = errors.New("please login first")
 		return nil, err
 	}
@@ -41,9 +41,9 @@ func (r *Router) GetRouterSpeed() (speedData g.Map, err error) {
 }
 
 func (r *Router) GetRouterInfo() (infoData g.Map, err error) {
-	if r.state == false {
+	if loginState, err := r.CheckLogin(); err != nil || loginState == false {
 		err = errors.New("please login first")
-		return
+		return nil, err
 	}
 	apiUrl := r.RouterAddress + configs.RouterInfoUrl
 	httpClient := g.Client().SetHeaderMap(r.Headers)

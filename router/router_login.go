@@ -28,7 +28,6 @@ type AesMethod interface {
 
 type Router struct {
 	*configs.RouterConfig
-	state     bool
 	aesIv     []byte
 	inHeaders map[string]string
 	randStr   string
@@ -128,7 +127,6 @@ func (r *Router) Login() (err error) {
 	g.Dump(gtime.Now().String() + " Login Success ")
 	r.Headers["Cookie"] = r.cookie
 	r.Headers["Token-ID"] = r.token
-	r.state = true
 	err = gcache.Set(context.Background(), "loginState", 1, 30*time.Second)
 	if err != nil {
 		return err
