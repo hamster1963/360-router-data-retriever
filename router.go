@@ -3,12 +3,12 @@ package router
 import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/hamster1963/360-router-data-retriever/configs"
-	"github.com/hamster1963/360-router-data-retriever/internal"
+	"github.com/hamster1963/360-router-data-retriever/router"
 )
 
 func RouterSimple() {
-	var routerMain internal.RouterController
-	myRouter := internal.Router{
+	var routerMain router.SRouterController
+	myRouter := router.Router{
 		Address:  configs.RouterAddress,
 		Password: configs.RouterPassword,
 	}
