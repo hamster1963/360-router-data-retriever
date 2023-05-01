@@ -8,14 +8,17 @@ import (
 	"errors"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gclient"
+	"github.com/gogf/gf/v2/os/gcache"
 	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/util/gconv"
 	"github.com/hamster1963/360-router-data-retriever/configs"
 	"github.com/hamster1963/360-router-data-retriever/utils"
+	"time"
 )
 
 type LoginMethod interface {
 	Login() error
+	CheckLogin() (bool, error)
 }
 
 type AesMethod interface {
@@ -124,5 +127,20 @@ func (r *Router) Login() (err error) {
 	r.Headers["Cookie"] = r.cookie
 	r.Headers["Token-ID"] = r.token
 	r.state = true
+	err = gcache.Set(context.Background(), "loginState", 1, 30*time.Second)
+	if err != nil {
+		return err
+	}
 	return
+}
+
+func (r *Router) CheckLogin() (bool, error) {
+	state, err := gcache.Get(context.Background(), "loginState")
+	if err != nil {
+		return false, err
+	}
+	if state.Int() == 1 {
+		return true, nil
+	}
+	return false, nil
 }
