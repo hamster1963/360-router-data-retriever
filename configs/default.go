@@ -6,9 +6,9 @@ var (
 	DefaultHeaders = map[string]string{
 		"Accept":       "application/json, text/plain, */*",
 		"User-Agent":   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
-		"Host":         "192.168.31.1",
-		"Origin":       "http://192.168.31.1",
-		"Referer":      "http://192.168.31.1/",
+		"Host":         RouterIP,
+		"Origin":       RouterAddress,
+		"Referer":      RouterAddress + "/",
 		"Cookie":       "",
 		"Token-ID":     "",
 		"Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",

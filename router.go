@@ -8,6 +8,7 @@ import (
 
 func RouterSimple() {
 	var routerMain router.SRouterController
+	configs.RouterIP = "router.xinyu.today:580"
 	myRouter := router.Router{
 		Address:  configs.RouterAddress,
 		Password: configs.RouterPassword,

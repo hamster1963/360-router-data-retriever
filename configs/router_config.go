@@ -1,6 +1,7 @@
 package configs
 
 var (
-	RouterAddress  = "http://192.168.31.1"
+	RouterIP       = "192.168.31.1"
+	RouterAddress  = "http://" + RouterIP
 	RouterPassword = "deny1963"
 )
