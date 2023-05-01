@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/gogf/gf/v2/frame/g"
-	"hamster1963/360-router-data-retriever/configs"
-	"hamster1963/360-router-data-retriever/internal"
+	"github.com/hamster1963/360-router-data-retriever/configs"
+	"github.com/hamster1963/360-router-data-retriever/internal"
 )
 
 func main() {

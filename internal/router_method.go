@@ -6,7 +6,7 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gclient"
 	"github.com/gogf/gf/v2/util/gconv"
-	"hamster1963/360-router-data-retriever/configs"
+	"github.com/hamster1963/360-router-data-retriever/configs"
 )
 
 type RouterMethod interface {
