@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/gogf/gf/v2/frame/g"
-	"router_remake/configs"
-	"router_remake/internal"
+	"hamster1963/360-router-data-retriever/configs"
+	"hamster1963/360-router-data-retriever/internal"
 )
 
 func main() {
@@ -29,7 +29,12 @@ func main() {
 		g.Dump(err)
 		return
 	}
-	err = routerMain.GetRouterInfo()
+	_, err = routerMain.GetRouterInfo()
+	if err != nil {
+		g.Dump(err)
+		return
+	}
+	_, err = routerMain.GetRouterSpeed()
 	if err != nil {
 		g.Dump(err)
 		return

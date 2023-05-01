@@ -10,8 +10,8 @@ import (
 	"github.com/gogf/gf/v2/net/gclient"
 	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/util/gconv"
-	"router_remake/configs"
-	"router_remake/utils"
+	"hamster1963/360-router-data-retriever/configs"
+	"hamster1963/360-router-data-retriever/utils"
 )
 
 type LoginMethod interface {
@@ -116,8 +116,9 @@ func (r *Router) Login() (err error) {
 		return err
 	}
 	// set cookie and token
+	resData := gconv.Map(res.ReadAllString())
 	r.cookie = res.Header.Get("Set-Cookie")
-	r.token = gconv.Map(res.ReadAllString())["Token-ID"].(string)
+	r.token = resData["Token-ID"].(string)
 	g.Dump(gtime.Now().String() + " Login Success ")
 	r.Headers = configs.DefaultHeaders
 	r.Headers["Cookie"] = r.cookie
