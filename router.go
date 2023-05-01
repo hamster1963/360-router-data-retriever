@@ -1,4 +1,4 @@
-package main
+package router
 
 import (
 	"github.com/gogf/gf/v2/frame/g"
@@ -6,7 +6,7 @@ import (
 	"github.com/hamster1963/360-router-data-retriever/internal"
 )
 
-func main() {
+func RouterSimple() {
 	var routerMain internal.RouterController
 	myRouter := internal.Router{
 		Address:  configs.RouterAddress,
