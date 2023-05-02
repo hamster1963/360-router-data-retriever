@@ -17,7 +17,7 @@ import (
 )
 
 type LoginMethod interface {
-	NewRouter(config *rconfig.RouterConfig) (*Router, error)
+	NewRouter(config *rconfig.RouterConfig) *Router
 	Login() error
 	CheckLogin() (bool, error)
 }
@@ -38,19 +38,15 @@ type Router struct {
 	Headers   map[string]string
 }
 
-func (r *Router) NewRouter(config *rconfig.RouterConfig) (newRouter *Router, err error) {
+func (r *Router) NewRouter(config *rconfig.RouterConfig) (newRouter *Router) {
 	// 进行路由器实例的构建
-	if config.RouterPassword == "" {
-		err = errors.New("please input router password")
-		return nil, err
-	}
 	newRouter = &Router{
 		RouterConfig: config,
 		Headers:      rconfig.DefaultHeaders,
 	}
-	newRouter.Headers["Host"] = r.RouterIP
-	newRouter.Headers["Origin"] = r.RouterAddress
-	newRouter.Headers["Referer"] = r.RouterAddress + "/"
+	newRouter.Headers["Host"] = config.RouterIP
+	newRouter.Headers["Origin"] = config.RouterAddress
+	newRouter.Headers["Referer"] = config.RouterAddress + "/"
 	return
 }
 
