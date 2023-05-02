@@ -1,4 +1,4 @@
-package configs
+package rconfig
 
 type RouterConfig struct {
 	RouterIP       string

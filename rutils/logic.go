@@ -1,4 +1,4 @@
-package router
+package rutils
 
 type SRouterController interface {
 	LoginMethod

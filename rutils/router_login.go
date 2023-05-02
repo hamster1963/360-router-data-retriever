@@ -1,4 +1,4 @@
-package router
+package rutils
 
 import (
 	"context"
@@ -11,12 +11,13 @@ import (
 	"github.com/gogf/gf/v2/os/gcache"
 	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/util/gconv"
-	"github.com/hamster1963/360-router-data-retriever/configs"
-	"github.com/hamster1963/360-router-data-retriever/utils"
+	"github.com/hamster1963/360-router-data-retriever/rconfig"
+	"github.com/hamster1963/360-router-data-retriever/rglobal"
 	"time"
 )
 
 type LoginMethod interface {
+	NewRouter(config *rconfig.RouterConfig) (*Router, error)
 	Login() error
 	CheckLogin() (bool, error)
 }
@@ -27,7 +28,7 @@ type AesMethod interface {
 }
 
 type Router struct {
-	*configs.RouterConfig
+	*rconfig.RouterConfig
 	aesIv     []byte
 	inHeaders map[string]string
 	randStr   string
@@ -37,13 +38,25 @@ type Router struct {
 	Headers   map[string]string
 }
 
+func (r *Router) NewRouter(config *rconfig.RouterConfig) (newRouter *Router, err error) {
+	// 进行路由器实例的构建
+	if config.RouterPassword == "" {
+		err = errors.New("please input router password")
+		return nil, err
+	}
+	newRouter = &Router{
+		RouterConfig: config,
+		Headers:      rconfig.DefaultHeaders,
+	}
+	newRouter.Headers["Host"] = r.RouterIP
+	newRouter.Headers["Origin"] = r.RouterAddress
+	newRouter.Headers["Referer"] = r.RouterAddress + "/"
+	return
+}
+
 // GetRandomString 获取随机字符串
 func (r *Router) GetRandomString() (err error) {
-	r.Headers = configs.DefaultHeaders
-	r.Headers["Host"] = r.RouterIP
-	r.Headers["Origin"] = r.RouterAddress
-	r.Headers["Referer"] = r.RouterAddress + "/"
-	apiUrl := r.RouterAddress + configs.GetRandStringUrl
+	apiUrl := r.RouterAddress + rconfig.GetRandStringUrl
 	g.Dump(apiUrl)
 	httpClient := gclient.New()
 	res, err := httpClient.Get(context.Background(), apiUrl)
@@ -86,8 +99,8 @@ func (r *Router) GenerateAesString() (err error) {
 	if err != nil {
 		panic(err)
 	}
-	encryptor := cipher.NewCBCEncrypter(block, configs.DefaultAesIv)
-	p7 := utils.PKCS7Encoder{BlockSize: 16}
+	encryptor := cipher.NewCBCEncrypter(block, rconfig.DefaultAesIv)
+	p7 := rglobal.PKCS7Encoder{BlockSize: 16}
 	padded := p7.Encode([]byte(r.RouterPassword))
 	cipherText := make([]byte, len(padded))
 	encryptor.CryptBlocks(cipherText, padded)
@@ -101,10 +114,10 @@ func (r *Router) GenerateAesString() (err error) {
 }
 
 func (r *Router) Login() (err error) {
-	loginUrl := r.RouterAddress + configs.LoginUrl
+	loginUrl := r.RouterAddress + rconfig.LoginUrl
 	payload := "user=admin&pass=" + r.randStr[:32] + r.aesStr + "&form=1"
 	httpClient := gclient.New()
-	httpClient.SetHeaderMap(configs.DefaultHeaders)
+	httpClient.SetHeaderMap(rconfig.DefaultHeaders)
 	res, err := httpClient.Post(context.Background(), loginUrl, payload)
 	if err != nil {
 		g.Dump(err)

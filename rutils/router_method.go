@@ -1,4 +1,4 @@
-package router
+package rutils
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gclient"
 	"github.com/gogf/gf/v2/util/gconv"
-	"github.com/hamster1963/360-router-data-retriever/configs"
+	"github.com/hamster1963/360-router-data-retriever/rconfig"
 )
 
 type RouterMethod interface {
@@ -19,7 +19,7 @@ func (r *Router) GetRouterSpeed() (speedData g.Map, err error) {
 		err = errors.New("please login first")
 		return nil, err
 	}
-	apiUrl := r.RouterAddress + configs.RouterSpeedUrl
+	apiUrl := r.RouterAddress + rconfig.RouterSpeedUrl
 	httpClient := g.Client().SetHeaderMap(r.Headers)
 	res, err := httpClient.Get(context.Background(), apiUrl)
 	if err != nil {
@@ -45,7 +45,7 @@ func (r *Router) GetRouterInfo() (infoData g.Map, err error) {
 		err = errors.New("please login first")
 		return nil, err
 	}
-	apiUrl := r.RouterAddress + configs.RouterInfoUrl
+	apiUrl := r.RouterAddress + rconfig.RouterInfoUrl
 	httpClient := g.Client().SetHeaderMap(r.Headers)
 	res, err := httpClient.Get(context.Background(), apiUrl)
 	if err != nil {
