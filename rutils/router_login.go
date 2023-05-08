@@ -9,7 +9,6 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gclient"
 	"github.com/gogf/gf/v2/os/gcache"
-	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/util/gconv"
 	"github.com/hamster1963/360-router-data-retriever/rconfig"
 	"github.com/hamster1963/360-router-data-retriever/rglobal"
@@ -53,7 +52,7 @@ func (r *Router) NewRouter(config *rconfig.RouterConfig) (newRouter *Router) {
 // GetRandomString 获取随机字符串
 func (r *Router) GetRandomString() (err error) {
 	apiUrl := r.RouterAddress + rconfig.GetRandStringUrl
-	g.Dump(apiUrl)
+	// g.Dump(apiUrl)
 	httpClient := gclient.New()
 	res, err := httpClient.Get(context.Background(), apiUrl)
 	if err != nil {
@@ -70,7 +69,7 @@ func (r *Router) GetRandomString() (err error) {
 		return err
 	}
 	r.randStr = gconv.String(gconv.Map(res.ReadAllString())["rand_key"])
-	g.Dump(gtime.Now().String() + " Get RandomKey " + r.randStr)
+	// g.Dump(gtime.Now().String() + " Get RandomKey " + r.randStr)
 	return nil
 }
 
@@ -105,7 +104,7 @@ func (r *Router) GenerateAesString() (err error) {
 		g.Dump("aesStr is empty")
 		return errors.New("aesStr is empty")
 	}
-	g.Dump(gtime.Now().String() + " Generate AESKey " + r.aesStr)
+	// g.Dump(gtime.Now().String() + " Generate AESKey " + r.aesStr)
 	return
 }
 
@@ -133,7 +132,7 @@ func (r *Router) Login() (err error) {
 	resData := gconv.Map(res.ReadAllString())
 	r.cookie = res.Header.Get("Set-Cookie")
 	r.token = resData["Token-ID"].(string)
-	g.Dump(gtime.Now().String() + " Login Success ")
+	// g.Dump(gtime.Now().String() + " Login Success ")
 	r.Headers["Cookie"] = r.cookie
 	r.Headers["Token-ID"] = r.token
 	err = gcache.Set(context.Background(), "loginState", 1, 30*time.Second)
