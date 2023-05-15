@@ -13,12 +13,10 @@ func RouterSimple() {
 		RouterAddress:  "http://router.xinyu.today:580",
 		RouterPassword: "deny1963",
 	}
-	myRouter, err := new(rutils.Router).NewRouter(routerConfig)
-	if err != nil {
-		return
-	}
+
+	myRouter := rutils.NewRouter().InitRouter(routerConfig)
 	var routerMain rutils.SRouterController = myRouter
-	err = routerMain.GetRandomString()
+	err := routerMain.GetRandomString()
 	if err != nil {
 		g.Dump(err)
 		return

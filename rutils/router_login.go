@@ -16,7 +16,7 @@ import (
 )
 
 type LoginMethod interface {
-	NewRouter(config *rconfig.RouterConfig) *Router
+	InitRouter(config *rconfig.RouterConfig) *Router
 	Login() error
 	CheckLogin() (bool, error)
 }
@@ -37,7 +37,11 @@ type Router struct {
 	Headers   map[string]string
 }
 
-func (r *Router) NewRouter(config *rconfig.RouterConfig) (newRouter *Router) {
+func NewRouter() *Router {
+	return new(Router)
+}
+
+func (r *Router) InitRouter(config *rconfig.RouterConfig) (newRouter *Router) {
 	// 进行路由器实例的构建
 	newRouter = &Router{
 		RouterConfig: config,
