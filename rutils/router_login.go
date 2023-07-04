@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/hex"
 	"errors"
-	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gclient"
 	"github.com/gogf/gf/v2/os/gcache"
 	"github.com/gogf/gf/v2/os/glog"
@@ -66,11 +65,12 @@ func (r *Router) GetRandomString() (err error) {
 	defer func(res *gclient.Response) {
 		err := res.Close()
 		if err != nil {
-			g.Dump(err)
+			glog.Warning(context.Background(), "GetRandomString close error", err)
 		}
 	}(res)
 	if res.StatusCode != 200 {
-		err = errors.New("GetRandomString status code error")
+		err = errors.New("status code error")
+		glog.Warning(context.Background(), "GetRandomString status code error", res.StatusCode)
 		return err
 	}
 	r.randStr = gconv.String(gconv.Map(res.ReadAllString())["rand_key"])
