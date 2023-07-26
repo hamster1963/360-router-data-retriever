@@ -1,4 +1,4 @@
-name: generate changelog
+name: generate_changelog
 
 on:
   release:
