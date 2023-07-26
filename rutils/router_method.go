@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gclient"
+	"github.com/gogf/gf/v2/os/glog"
 	"github.com/gogf/gf/v2/util/gconv"
 	"github.com/hamster1963/360-router-data-retriever/rconfig"
 )
@@ -28,7 +29,7 @@ func (r *Router) GetRouterSpeed() (speedData g.Map, err error) {
 	defer func(res *gclient.Response) {
 		err := res.Close()
 		if err != nil {
-			g.Dump(err)
+			glog.Warning(context.Background(), err)
 		}
 	}(res)
 	if res.StatusCode != 200 {
@@ -54,7 +55,7 @@ func (r *Router) GetRouterInfo() (infoData g.Map, err error) {
 	defer func(res *gclient.Response) {
 		err := res.Close()
 		if err != nil {
-			g.Dump(err)
+			glog.Warning(context.Background(), err)
 		}
 	}(res)
 	if res.StatusCode != 200 {
