@@ -1,4 +1,4 @@
-name: build-go-binary
+name: generate changelog
 
 on:
   release:
