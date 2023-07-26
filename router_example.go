@@ -9,11 +9,11 @@ import (
 	"time"
 )
 
-func TestRouterSimple() {
+func TestRouterExample() {
 	routerConfig := &rconfig.RouterConfig{
-		RouterIP:       "router.sample.today",
-		RouterAddress:  "https://router.sample.today",
-		RouterPassword: "sample",
+		RouterIP:       "router.example.today",
+		RouterAddress:  "https://router.example.today",
+		RouterPassword: "example",
 	}
 
 	myRouter := rutils.NewRouter().InitRouter(routerConfig)
