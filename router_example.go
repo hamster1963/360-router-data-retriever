@@ -39,6 +39,13 @@ func TestRouterExample() {
 		return
 	}
 
+	deviceList, err := routerMain.GetDeviceList()
+	if err != nil {
+		glog.Warning(context.Background(), err)
+		return
+	}
+	g.Dump(deviceList)
+
 	// 获取十次网速
 	for i := 0; i < 10; i++ {
 		info, err := routerMain.GetRouterSpeed()
