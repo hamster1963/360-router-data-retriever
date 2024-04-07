@@ -19,8 +19,10 @@ type RouterMethod interface {
 
 func (r *Router) GetRouterSpeed() (speedData g.Map, err error) {
 	if loginState, err := r.CheckLogin(); err != nil || loginState == false {
-		err = errors.New("please login first")
-		return nil, err
+		err := r.Login()
+		if err != nil {
+			return nil, err
+		}
 	}
 	apiUrl := r.RouterAddress + rconfig.RouterSpeedUrl
 	httpClient := g.Client().SetHeaderMap(r.Headers)
@@ -45,8 +47,10 @@ func (r *Router) GetRouterSpeed() (speedData g.Map, err error) {
 
 func (r *Router) GetRouterInfo() (infoData g.Map, err error) {
 	if loginState, err := r.CheckLogin(); err != nil || loginState == false {
-		err = errors.New("please login first")
-		return nil, err
+		err := r.Login()
+		if err != nil {
+			return nil, err
+		}
 	}
 	apiUrl := r.RouterAddress + rconfig.RouterInfoUrl
 	httpClient := g.Client().SetHeaderMap(r.Headers)
@@ -71,8 +75,10 @@ func (r *Router) GetRouterInfo() (infoData g.Map, err error) {
 
 func (r *Router) GetDeviceList() (DeviceListData g.Map, err error) {
 	if loginState, err := r.CheckLogin(); err != nil || loginState == false {
-		err = errors.New("please login first")
-		return nil, err
+		err := r.Login()
+		if err != nil {
+			return nil, err
+		}
 	}
 	apiUrl := r.RouterAddress + rconfig.RouterDeviceInfoUrl
 	httpClient := g.Client().SetHeaderMap(r.Headers)

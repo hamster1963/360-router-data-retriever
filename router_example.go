@@ -11,9 +11,9 @@ import (
 
 func TestRouterExample() {
 	routerConfig := &rconfig.RouterConfig{
-		RouterIP:       "router.example.today",
-		RouterAddress:  "https://router.example.today",
-		RouterPassword: "example",
+		RouterIP:       "router.buycoffee.top:580",
+		RouterAddress:  "http://router.buycoffee.top:580",
+		RouterPassword: "deny1963",
 	}
 
 	myRouter := rutils.NewRouter().InitRouter(routerConfig)
