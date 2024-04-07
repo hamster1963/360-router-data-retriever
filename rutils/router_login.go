@@ -134,11 +134,11 @@ func (r *Router) Login() (err error) {
 	// set cookie and token
 	resData := gconv.Map(res.ReadAllString())
 	r.cookie = res.Header.Get("Set-Cookie")
-	r.token = resData["Token-ID"].(string)
+	r.token = gconv.String(resData["Token-ID"])
 	r.Headers["Cookie"] = r.cookie
 	r.Headers["Token-ID"] = r.token
 	// set login state
-	err = gcache.Set(context.Background(), "loginState", 1, 30*time.Second)
+	err = gcache.Set(context.Background(), "loginState", 1, 60*time.Second)
 	if err != nil {
 		return err
 	}
