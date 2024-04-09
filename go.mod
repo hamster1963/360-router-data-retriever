@@ -2,7 +2,7 @@ module github.com/hamster1963/360-router-data-retriever
 
 go 1.21
 
-require github.com/gogf/gf/v2 v2.6.3
+require github.com/gogf/gf/v2 v2.7.0
 
 require (
 	github.com/BurntSushi/toml v1.3.2 // indirect
